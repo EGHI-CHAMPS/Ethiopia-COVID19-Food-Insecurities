@@ -1,0 +1,663 @@
+---
+title: "Household-level Impacts of COVID-19 in Ethiopia: Food Insecurity"
+author: "Jonathan Muir"
+date: "Spring 2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pander) # makes tables clean and aesthetically pleasing
+library(ggplot2) # the most up to date visualization package for R
+library(tidyverse) # package of packages: includes ggplot2 and dplyr- great at filtering and subsetting  data;haven is part of tidyverse: allows use of data files from SAS, SPSS, or Stata
+library(haven) # read in .dta data
+library(readxl) # makes reading in Excel files and updating them easily possible
+library(vtable) #sumtable for summary statistics
+library(FactoMineR) #for computing principle component methods
+library(factoextra) #for extracting, visualizing and interpreting PCA results
+library(cluster) # clustering methods
+library(finalfit) # fun and logistic regression
+library(stargazer) #Table formatting for Word
+library(modelsummary) #produces output for every common format
+library(ltm) #Cronbach's Alpha -- to assess internal consistency of survey data
+library(flextable) #tables for word
+library(labelled) #unlabelling haven labeled variables
+library(leaps) #model selection
+library(kableExtra) # model summary tables
+library(jtools) #more model tables
+library(ggstance) #visualizing models
+library(huxtable) #exporting tables
+library(viridis) # color scheme
+library(epiDisplay)
+library(magicfor) # used in PCA Wealth Index code
+library(gmodels) # used in PCA Wealth Index code
+library(forestmodel) # Forest plots for ORs
+library(ggpubr) # Forest plot formatting
+library(grid)
+library(gridExtra)
+library(dplyr)
+library(AER)
+library(summarytools)
+library(reshape2)
+library(waffle)
+library(hrbrthemes)
+library(pals)
+library(readxl)
+library(ggthemes)
+library(dplyr)
+library(tidytext)
+library(extrafont)
+library(gtsummary)
+extrafont::font_import()
+```
+
+
+*Bivariate Associations of Food Insecurity _ Sensitivity Analysis*
+
+*Dependent Variable: Dichotomous Food Insecurity outcome variable*
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Age (Household Head)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Sex (Household Head)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Ethnicity (Household Head)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Religion (Household Head)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Education (Household Head)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Occupation (Household Head)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Residence (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`HDSS (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Household Size`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Children Under Age 5 (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Elderly Over Age 60 (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Dependents (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Income (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Wealth Index (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Job Loss (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Food Price Increase (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Pre-COVID Food Insecurity (Household)`, data$COVID_Food_Insecurity, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`HDSS (Household)`, data$`Food Price Increase (Household)`, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r}
+#Categorical Socio-demographic Variables
+# Age Category
+CrossTable(data$`Residence (Household)`, data$`Food Price Increase (Household)`, prop.r=FALSE, prop.c=FALSE,
+           prop.t=FALSE, chisq = TRUE, format="SAS")
+
+```
+
+```{r, echo=FALSE, results='hide'}
+panels <- list(
+  list(width = 0.01),
+  list(width = 0.20, display = ~variable, fontface = "bold", heading = "Variable"),
+  list(width = 0.20, display = ~level),
+  #list(width = 0.05, display = ~n, hjust = 1, heading = "n"),
+  list(width = 0.01, item = "vline", hjust = 0.5),
+  list(width = 0.26, item = "forest", hjust = 0.5, heading = "Odds Ratio", linetype = "solid", line_x = 0),
+  list(width = 0.01, item = "vline", hjust = 0.5),
+  list(width = 0.20, display = ~ ifelse(reference, "Reference", sprintf("%0.2f (%0.2f, %0.2f)", trans(estimate), trans(conf.low), trans(conf.high))), display_na = NA),
+  list(width = 0.05, display = ~ ifelse(reference, "", format.pval(p.value, digits = 1, eps = 0.001)), display_na = NA, hjust = 1, heading = "p"),
+  list(width = 0.01)
+)
+```
+
+```{r, echo=FALSE, results='hide'}
+#Categorical Socio-demographic Variables
+# Age Category
+Model1 <- glm(formula = COVID_Food_Insecurity ~ `Age (Household Head)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model1) 
+Model1 
+odds.ratios <- as.matrix(exp(coef(Model1)))
+odds.ratios
+plot1 <- forest_model(Model1)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot1
+```
+
+```{r, echo=FALSE, results='hide'}
+#Categorical Socio-demographic Variables
+# Age Category
+Model2 <- glm(formula = COVID_Food_Insecurity ~ `Sex (Household Head)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model2) 
+odds.ratios <- as.matrix(exp(coef(Model2)))
+odds.ratios
+plot2 <- forest_model(Model2)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot2
+```
+
+```{r, echo=FALSE, results='hide'}
+#continuous socio-demographic variables
+# Age
+Model3 <- glm(formula = COVID_Food_Insecurity ~ `Ethnicity (Household Head)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model3) 
+odds.ratios <- as.matrix(exp(coef(Model3)))
+odds.ratios
+plot3 <- forest_model(Model3)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot3
+```
+
+```{r, echo=FALSE, results='hide'}
+# Sex
+Model4 <- glm(formula = COVID_Food_Insecurity ~ `Religion (Household Head)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model4) 
+odds.ratios <- as.matrix(exp(coef(Model4)))
+odds.ratios
+plot4 <- forest_model(Model4)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot4
+```
+
+```{r, echo=FALSE, results='hide'}
+# Occupation
+Model5 <- glm(formula = COVID_Food_Insecurity ~ `Education (Household Head)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model5)
+odds.ratios <- as.matrix(exp(coef(Model5)))
+odds.ratios
+plot5 <- forest_model(Model5)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot5
+```
+
+```{r, echo=FALSE, results='hide'}
+# Education Level
+Model6 <- glm(formula = COVID_Food_Insecurity ~ `Occupation (Household Head)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model6) 
+odds.ratios <- as.matrix(exp(coef(Model6)))
+odds.ratios
+plot6 <- forest_model(Model6)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot6
+```
+
+
+```{r, echo=FALSE, results='hide'}
+# Urban Residence
+Model7 <- glm(formula = COVID_Food_Insecurity ~ `Residence (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model7) 
+odds.ratios <- as.matrix(exp(coef(Model7)))
+odds.ratios
+plot7 <- forest_model(Model7)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot7
+```
+
+```{r, echo=FALSE, results='hide'}
+# HDSS Site
+Model8 <- glm(formula = COVID_Food_Insecurity ~ `HDSS (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model8) 
+odds.ratios <- as.matrix(exp(coef(Model8)))
+odds.ratios
+plot8 <- forest_model(Model8)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot8
+```
+
+```{r, echo=FALSE, results='hide'}
+# Family number
+Model9 <- glm(formula = COVID_Food_Insecurity ~ `Household Size`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model9)
+odds.ratios <- as.matrix(exp(coef(Model9)))
+odds.ratios
+plot9 <- forest_model(Model9)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot9
+```
+
+```{r, echo=FALSE, results='hide'}
+# Number of children under 5
+Model10 <- glm(formula = COVID_Food_Insecurity ~ `Children Under Age 5 (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model10) 
+odds.ratios <- as.matrix(exp(coef(Model10)))
+odds.ratios
+plot10 <- forest_model(Model10)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot10
+```
+
+```{r, echo=FALSE, results='hide'}
+# Number of elderly people
+Model11 <- glm(formula = COVID_Food_Insecurity ~ `Elderly Over Age 60 (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model11) 
+odds.ratios <- as.matrix(exp(coef(Model11)))
+odds.ratios
+plot11 <- forest_model(Model11)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot11
+```
+
+```{r, echo=FALSE, results='hide'}
+# Household Monthly Income
+Model12<- glm(formula = COVID_Food_Insecurity ~ `Income (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model12) 
+odds.ratios <- as.matrix(exp(coef(Model12)))
+odds.ratios
+plot12 <- forest_model(Model12)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot12
+```
+
+```{r, echo=FALSE, results='hide'}
+# Household Monthly Income
+Model13 <- glm(formula = COVID_Food_Insecurity ~ `Wealth Index (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model13) 
+odds.ratios <- as.matrix(exp(coef(Model13)))
+odds.ratios
+plot13 <- forest_model(Model13)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot13
+```
+
+```{r, echo=FALSE, results='hide'}
+# Job Loss
+Model14 <- glm(formula = COVID_Food_Insecurity ~ `Job Loss (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model14) 
+odds.ratios <- as.matrix(exp(coef(Model14)))
+odds.ratios
+plot14 <- forest_model(Model14)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot14
+```
+
+```{r, echo=FALSE, results='hide'}
+# Nonfarm Business Closure
+Model15 <- glm(formula = COVID_Food_Insecurity ~ `Agricultural Land Ownership (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model15) 
+odds.ratios <- as.matrix(exp(coef(Model15)))
+odds.ratios
+plot15 <- forest_model(Model15)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot15
+```
+
+```{r, echo=FALSE, results='hide'}
+# Food Price Increase
+Model16 <- glm(formula = COVID_Food_Insecurity ~ `Food Price Increase (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model16) 
+odds.ratios <- as.matrix(exp(coef(Model16)))
+odds.ratios
+plot16 <- forest_model(Model16)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot16
+```
+
+```{r, echo=FALSE, results='hide'}
+# Family Illness or Death
+Model17 <- glm(formula = COVID_Food_Insecurity ~ `Farm Disruption (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model17) 
+odds.ratios <- as.matrix(exp(coef(Model17)))
+odds.ratios
+plot17 <- forest_model(Model17)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot17
+```
+
+```{r, echo=FALSE, results='hide'}
+# PreCOVID Food Insecurity
+Model20 <- glm(formula = COVID_Food_Insecurity ~ `Dependents (Household)`,
+             family = binomial,
+             data = data)
+cat("Regression model:\n")
+summary(Model20) 
+odds.ratios <- as.matrix(exp(coef(Model20)))
+odds.ratios
+plot20 <- forest_model(Model20)
+```
+
+```{r, echo=FALSE, results='hide'}
+plot20
+```
+
+
+```{r, echo=FALSE, results='hide'}
+panels <- list(
+  list(width = 0.01),
+  list(width = 0.225, display = ~variable, fontface = "bold", heading = "Variable"),
+  list(width = 0.20, display = ~level),
+  #list(width = 0.05, display = ~n, hjust = 1, heading = "n"),
+  list(width = 0.01, item = "vline", hjust = 0.5),
+  list(width = 0.26, item = "forest", hjust = 0.5, heading = "Odds Ratio", linetype = "dotted", color = "red", line_x = 0),
+  list(width = 0.01, item = "vline", hjust = 0.5),
+  list(width = 0.20, display = ~ ifelse(reference, "Reference", sprintf("%0.2f (%0.2f, %0.2f)", trans(estimate), trans(conf.low), trans(conf.high))), display_na = NA),
+  #list(width = 0.05, display = ~ ifelse(reference, "", format.pval(p.value, digits = 1, eps = 0.001)), display_na = NA, hjust = 1, heading = "p"),
+  list(width = 0.01)
+)
+```
+
+```{r, echo=FALSE}
+# Produce forest plots
+model_list <- list(Model1, Model2, Model3, Model4, Model5, Model6, Model7, Model8, Model9, Model20, Model12, Model13, Model14, Model16)
+bivariate_plots <- forest_model(model_list = model_list, format_options = forest_model_format_options(colour = "black", color = NULL, shape = 18, text_size = 20, point_size = 1.25, banded = TRUE), panels = panels, merge_models = TRUE, factor_separate_line = TRUE, recalculate_width = FALSE, recalculate_height = TRUE) 
+bivariate_plots <- bivariate_plots + theme(text = element_text(size = 6))
+bivariate_plots <- bivariate_plots + geom_segment(x = 0, y = 0, xend = 0, yend = 59.4, linetype="solid", color = "darkred", size=0.5)
+bivariate_plots
+```
+
+```{r, echo=FALSE, results='hide'}
+pdf("../Figures/Odds Ratios/Sensitivity_Bivariate_Plots.pdf", width = 3.25, height = 4.75)
+bivariate_plots
+dev.off()
+```
+
+
+*Multivariate Associations of Food Insecurity*
+
+```{r, echo=FALSE, results='hide'}
+panels <- list(
+  list(width = 0.01),
+  list(width = 0.225, display = ~variable, fontface = "bold", heading = "Variable"),
+  list(width = 0.20, display = ~level),
+  #list(width = 0.05, display = ~n, hjust = 1, heading = "n"),
+  list(width = 0.01, item = "vline", hjust = 0.5),
+  list(width = 0.26, item = "forest", hjust = 0.5, heading = "Adjusted Odds Ratio", linetype = "dashed", line_x = 0),
+  list(width = 0.01, item = "vline", hjust = 0.5),
+  list(width = 0.15, display = ~ ifelse(reference, "Reference", sprintf("%0.2f (%0.2f, %0.2f)", trans(estimate), trans(conf.low), trans(conf.high))), display_na = NA),
+  #list(width = 0.05, display = ~ ifelse(reference, "", format.pval(p.value, digits = 1, eps = 0.001)), display_na = NA, hjust = 1, heading = "p"),
+  list(width = 0.01)
+)
+```
+
+*What would be the best model to estimate household vulnerability to experiencing COVID-related hardship based on the given data on hand?*
+
+```{r, echo=FALSE}
+# all covariates
+FinalModel2 <- glm(formula = COVID_Food_Insecurity ~ `Age (Household Head)` +
+                                                     `Sex (Household Head)` +
+                                                     `Ethnicity (Household Head)` +
+                                                     `Occupation (Household Head)`+ 
+                                                     `Education (Household Head)`+ 
+                                                     `Income (Household)` +
+                                                     `Wealth Index (Household)`, family = binomial, data = data)
+ 
+# Print the regression model
+summary(FinalModel2) 
+BIC(FinalModel2)
+```
+
+```{r, echo=FALSE}
+# all covariates
+FinalModel3 <- glm(formula = COVID_Food_Insecurity ~ `Age (Household Head)` +
+                                                     `Sex (Household Head)` +
+                                                     `Ethnicity (Household Head)` +
+                                                     `Education (Household Head)` +
+                                                     `Occupation (Household Head)` + 
+                                                     #`Residence (Household)` + 
+                                                     `HDSS (Household)` +
+                                                     `Household Size` +
+                                                     `Dependents (Household)` +
+                                                     `Income (Household)` +
+                                                     `Wealth Index (Household)` +
+                                                     `Job Loss (Household)` +
+                                                     `Food Price Increase (Household)` , family = binomial, data = data)
+ 
+# Print the regression model
+summary(FinalModel3) 
+BIC(FinalModel3)
+```
+
+```{r, echo=FALSE}
+# all covariates
+FinalModel4 <- glm(formula = COVID_Food_Insecurity ~ #`Government/Community Response` +
+                                                     `Age (Household Head)` +
+                                                     `Sex (Household Head)` +
+                                                     `Ethnicity (Household Head)` +
+                                                     `Education (Household Head)` +
+                                                     `Occupation (Household Head)` + 
+                                                     `Residence (Household)` + 
+                                                     `HDSS (Household)` +
+                                                     `Household Size` +
+                                                     `Dependents (Household)` +
+                                                     `Income (Household)` +
+                                                     `Wealth Index (Household)` +
+                                                     `Job Loss (Household)` +
+                                                     `Food Price Increase (Household)` , family = binomial, data = data)
+ 
+# Print the regression model
+summary(FinalModel4)
+BIC(FinalModel4)
+```
+
+```{r, echo=FALSE}
+# all covariates
+FinalModel5 <- glm(formula = COVID_Food_Insecurity ~ #`Government/Community Response` +
+                                                     `Age (Household Head)` +
+                                                     `Sex (Household Head)` +
+                                                     `Ethnicity (Household Head)` +
+                                                     `Education (Household Head)` +
+                                                     `Occupation (Household Head)` + 
+                                                     #`Residence (Household)` + 
+                                                     `HDSS (Household)` +
+                                                     `Household Size` +
+                                                     `Dependents (Household)` +
+                                                     `Income (Household)` +
+                                                     `Wealth Index (Household)` +
+                                                     `Job Loss (Household)` +
+                                                     `Food Price Increase (Household)`, family = binomial, data = data)
+ 
+# Print the regression model
+summary(FinalModel5)
+odds.ratios <- as.matrix(exp(coef(FinalModel5)))
+odds.ratios
+BIC(FinalModel5)
+```
+
+```{r, echo=FALSE, results='hide'}
+# Produce forest plots
+model_list <- list(FinalModel5)
+multivariate_plots <- forest_model(model_list = model_list, format_options = forest_model_format_options(colour = "black", color = NULL, shape = 18, text_size = 20, point_size = 1.25, banded = TRUE), panels = panels, merge_models = TRUE, factor_separate_line = TRUE, recalculate_width = FALSE, recalculate_height = TRUE)
+multivariate_plots <- multivariate_plots + theme(text = element_text(size = 6))
+multivariate_plots <- multivariate_plots + geom_segment(x = 0, y = 0, xend = 0, yend = 52.4, linetype="solid", color = "darkred", size=0.5)
+multivariate_plots
+
+pdf("../Figures/Odds Ratios/Sensitivity_Multivariate_Plots.pdf", width = 3.5, height = 4.75)
+multivariate_plots
+dev.off()
+```
