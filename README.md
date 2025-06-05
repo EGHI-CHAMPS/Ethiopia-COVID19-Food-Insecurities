@@ -7,6 +7,6 @@ Journal: BMC Nutrition
 
 DOI: [10.1016/j.jinf.2024.01.006](https://doi.org/10.1186/s40795-023-00815-9)
 
-Data: https://doi.org/10.15139/S3/PBEJDU
+Data: [https://doi.org/10.15139/S3/PBEJDU](https://doi.org/10.15139/S3/CZO1IX)
 
 Summary: We describe the contributions of malaria among deaths in children aged 1-59 months enrolled in the Child Health and Mortality Prevention Surveillance (CHAMPS) Network.
