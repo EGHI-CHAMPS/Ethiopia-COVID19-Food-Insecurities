@@ -9,4 +9,4 @@ DOI: [10.1016/j.jinf.2024.01.006](https://doi.org/10.1186/s40795-023-00815-9)
 
 Data: [https://doi.org/10.15139/S3/PBEJDU](https://doi.org/10.15139/S3/CZO1IX)
 
-Summary: We describe the contributions of malaria among deaths in children aged 1-59 months enrolled in the Child Health and Mortality Prevention Surveillance (CHAMPS) Network.
+Summary: The COVID-19 pandemic was associated with widespread social disruptions, as governments implemented lockdowns to quell disease spread. To advance knowledge of consequences for households in resource-limited countries, we examined food insecurity during the pandemic period by conducting a cross-sectional study and using logistic regression to examine factors associated with food insecurity. 
